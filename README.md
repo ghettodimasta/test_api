@@ -17,9 +17,9 @@
       --data '{"id":"21494"}' \  
       http://localhost:5000/GetParams  
 
-3. To get filtered products name use:
-    curl --header "Content-Type: application/json" \  
+3. To get filtered products name use:  
+    curl --header "Content-Type: application/json" \   
       --request POST \  
-      --data '{"name":"some_test_phone","description":"test_desc_with_curl","parametrs":{"camera": "12px", "color": "red"}}' \  
-      http://localhost:5000/CreateProduct  
+      --data '{"name":"iph","param_key":"arch","param_value": "arm"}' \  
+      http://localhost:5000/GetProducts  
       ~NOTE!~ *You can use either a name parameter, or a key parameter and a value parameter  if you try to use them together, you will take an error!*
