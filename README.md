@@ -22,4 +22,4 @@
       --request POST \  
       --data '{"name":"iph","param_key":"arch","param_value": "arm"}' \  
       http://localhost:5000/GetProducts  
-      ~NOTE!~ *You can use either a name parameter, or a key parameter and a value parameter  if you try to use them together, you will take an error!*
+      **NOTE!** *You can use either a name parameter, or a key parameter and a value parameter  if you try to use them together, you will take an error!*
