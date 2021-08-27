@@ -18,14 +18,6 @@ app = Flask(__name__)
 def index():
     return 'Main page'
 
-
-def random_string(string_length=10):
-    random = str(uuid.uuid4())
-    random = random.upper()
-    random = random.replace("-", "")
-    return random[0:string_length]
-
-
 @app.route('/GetProducts', methods=['GET', 'POST'])
 def get_names():
     """
@@ -40,8 +32,6 @@ def get_names():
         param_value = None
         ans = []
         filters = ast.literal_eval(request.data.decode("UTF-8"))
-        ic(filters)
-        ic(filters.keys())
         if 'name' in filters.keys() and 'param_key' in filters.keys() and 'param_value' in filters.keys():
             print("Y")
             return {'success': False, 'res': "Wrong json parametrs"}
@@ -52,21 +42,15 @@ def get_names():
             param_value = filters['param_value']
         else:
             return {'success': False, 'res': "Wrong json parametrs"}
-        ic(name)
-        ic(param_key)
-        ic(param_value)
     except:
         return {'success': False, 'res': f"Bad request: omitted argument"}
     try:
 
         sqn = sql.select('products', fields='name')
-        ic(sqn)
         names = []
 
         for n in sqn:
-            ic(n[0])
             if name is not None:
-                ic(n[0].find(name))
                 if n[0].find(name) >= 0:
                     names.append(n[0])
             elif name is None and param_key is None and param_value is None:
