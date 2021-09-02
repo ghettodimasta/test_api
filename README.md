@@ -34,46 +34,31 @@
 3. To get filtered products name use:  
     curl --header "Content-Type: application/json" \   
       --request POST \  
-      --data '{"name":"iph","param_key":"arch","param_value": "arm"}' \  
+      --data '{"params":{"color":"red", "camera":"12px"}}' \  
       http://localhost:5000/GetProducts  
       **Output Example**  
-      1. With filter *name*
+      1. With filter *params*
       `{
   "res": [
     {
-      "name": "iphone"
+      "name": "some_test_phone"
     }, 
     {
-      "name": "iphone"
-    }, 
-    {
-      "name": "iphone12"
-    }, 
-    {
-      "name": "iphone11"
+      "name": "example"
     }
   ], 
   "success": true
 }`
-      2. With filter *param_key* and *param_value*  
+      2. With filter *name* and *params*  
+      curl --header "Content-Type: application/json" \   
+      --request POST \  
+      --data '{"name":"ex","params":{"color":"red", "camera":"12px"}}' \  
+      http://localhost:5000/GetProducts  
 `{
   "res": [
     {
-      "name": "kek"
-    }, 
-    {
-      "name": "testphone"
-    }, 
-    {
-      "name": "iphone"
-    }, 
-    {
-      "name": "huawei"
+      "name": "example"
     }
   ], 
   "success": true
-}`  
-      **NOTE!** *You can use either a name parameter, or a key parameter and a value parameter  if you try to use them together, you will take an error!*
-
-
-
+}`
