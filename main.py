@@ -39,41 +39,35 @@ def get_names():
       http://localhost:5000/GetProducts
     """
     try:
-        name = None
-        param_key = None
-        param_value = None
         ans = []
         filters = ast.literal_eval(request.data.decode("UTF-8"))
-        ic(filters)
-        ic(filters.keys())
-        if 'name' in filters.keys() and 'param_key' in filters.keys() and 'param_value' in filters.keys():
-            print("Y")
-            return {'success': False, 'res': "Wrong json parametrs"}
-        if 'name' in filters.keys():
-            name = filters['name']
-        elif 'param_key' in filters.keys() and 'param_value' in filters.keys():
-            param_key = filters['param_key']
-            param_value = filters['param_value']
-        else:
-            return {'success': False, 'res': "Wrong json parametrs"}
-        ic(name)
-        ic(param_key)
-        ic(param_value)
+        name = filters.get("name")
+        params = filters.get("params")
     except:
         return {'success': False, 'res': f"Bad request: omitted argument"}
     try:
         names = []
-        if name is not None:
-            for i in db.reviews.find():
-                if i["name"].find(name) >= 0:
+        if params is None:
+            if name is not None:
+                for i in db.reviews.find():
+                    if i["name"].find(name) >= 0:
+                        names.append(i["name"])
+                ic(names)
+                if names is None:
+                    return {'success': False, 'res': "Not found"}
+        else:
+            params_to_mongo = {}
+            for key, value in params.items():
+                params_to_mongo["params." + key] = value
+            ic(params_to_mongo)
+            result = db.reviews.find(params_to_mongo)
+            for i in result:
+                ic(i['name'])
+                if name is not None:
+                    if i["name"].find(name) >= 0:
+                        names.append(i["name"])
+                else:
                     names.append(i["name"])
-            ic(names)
-            if names is None:
-                return {'success': False, 'res': "Not found"}
-
-        if param_key is not None and param_value is not None:
-            for i in db.reviews.find({f"params.{param_key}": param_value}):
-                names.append(i['name'])
 
         for name in names:
             ic(name)
